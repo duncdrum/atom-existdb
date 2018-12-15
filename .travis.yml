@@ -33,8 +33,9 @@ jobs:
           branch: master
         provider: script
         skip_cleanup: true
-
         script:
+          - echo $PATH
+          - apm -v
           - npx semantic-release
 
 notifications:
@@ -44,6 +45,8 @@ notifications:
 
 before_script:
   - export PATH=$PATH:~/atom/usr/bin
+  # - echo $PATH
+
 
 script:
   - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
@@ -51,4 +54,7 @@ script:
   - ./build-package.sh
 
 after_success:
-  - atom -v  
+  - apm -v
+
+after_failure:
+  - echo $PATH
